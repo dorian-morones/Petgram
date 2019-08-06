@@ -1,4 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {App} from './App.js'
 
-ReactDOM.render(<p>Jalando al 100 perro</p>, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
