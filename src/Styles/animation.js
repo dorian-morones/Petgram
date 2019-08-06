@@ -14,3 +14,18 @@ const fadeInKeyframes = keyframes`
     }
 `
 export const fadeIn = ({time = '1s', type = 'ease'} = {}) => css`animation: ${time} ${fadeInKeyframes} ${type};`
+
+
+const fadeInKeyframesCategories = keyframes`
+    from {
+        filter: blur(5px);
+        opacity: 0;
+        margin-top: -20px;
+    }
+    to{
+        filter: blur(0);
+        opacity: 1; 
+        margin-top: 0px;
+    }
+`
+export const fadeInCategories = ({time = '1s', type = 'ease'} = {}) => css`animation: ${time} ${fadeInKeyframesCategories} ${type};`
