@@ -28,4 +28,10 @@ html {
     overflow-x: hidden;
     min-height: 100vh;
     padding-bottom: 10px;
-  }`
+  }
+  .title{
+    text-align: center;
+    background: #f7f7f7;
+    padding:5px;
+  }
+  `
