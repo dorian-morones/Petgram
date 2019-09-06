@@ -1,40 +1,48 @@
-import React, { useContext, Suspense } from 'react'
-import { GlobalStyle } from './styles/GlobalStyles'
-import { Logo } from './components/Logo'
-import { NavBar } from './components/NavBar'
+import React from 'react'
+import { Router } from '@reach/router'
+
+import { GlobalStyles } from './styles/GlobalStyles'
 
 import { Home } from './pages/Home'
 import { Detail } from './pages/Detail'
 // import { Favs } from './pages/Favs'
-import { User } from './pages/User'
-import { NotRegisteredUser } from './pages/NotRegisteredUser'
-import { NotFound } from './Pages/NotFound'
+// import { Profile } from './pages/Profile'
+import { NotRegistered } from './pages/NotRegistered'
 
-import { Router, Redirect } from '@reach/router'
-import { Context } from './Context'
+import { Logo } from './components/Logo'
+import { NavBar } from './components/NavBar'
+
+import Context from './Context'
 
 const Favs = React.lazy(() => import('./pages/Favs'))
+const Profile = React.lazy(() => import('./pages/Profile'))
 
-export const App = () => {
-  const { isAuth } = useContext(Context)
+export default function () {
   return (
-    <Suspense fallback={<div />}>
-      <GlobalStyle />
+    <React.Suspense fallback={<div />}>
       <Logo />
+      <GlobalStyles />
       <Router>
-        <NotFound default/>
         <Home path='/' />
-        <Home path='/pet/:categoryId' />
-        <Detail path='/detail/:detailId' />
-        {!isAuth && <NotRegisteredUser path='/login' />}
-        {!isAuth && <Redirect from="/favs" to="/login" />}
-        {!isAuth && <Redirect from="/user" to="/login" />}
-        {isAuth && <Redirect from="/login" to="/" />}
-        <Favs path='/favs' />
-        <User path='/user' />
+        <Home path='/pet/:id' />
+        <Detail path='/detail/:id' />
       </Router>
-      
+
+      <Context.Consumer>
+        {
+          ({ isAuth }) =>
+            isAuth
+              ? <Router>
+                <Favs path='favs' />
+                <Profile path='user' />
+              </Router>
+              : <Router>
+                <NotRegistered path='favs' />
+                <NotRegistered path='user' />
+              </Router>
+        }
+      </Context.Consumer>
       <NavBar />
-    </Suspense>
+    </React.Suspense>
   )
 }
